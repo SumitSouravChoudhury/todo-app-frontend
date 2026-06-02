@@ -1,0 +1,131 @@
+@use "/src/styles/variable.scss" as variable;
+
+.btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Sizes
+  &--sm {
+    font-size: 14rem;
+    padding: 6px 12px;
+  }
+
+  &--md {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  &--lg {
+    font-size: 18rem;
+    padding: 12px 28px;
+  }
+
+  // Variants
+  &--primary {
+    background-color: variable.$color-blue-0;
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background-color: #1975e6;
+    }
+
+    &:active:not(:disabled) {
+      background-color: #0072fd;
+    }
+  }
+
+  &--secondary {
+    background-color: #f3f4f6;
+    color: #000;
+
+    &:hover:not(:disabled) {
+      background-color: #e5e7eb;
+    }
+
+    &:active:not(:disabled) {
+      background-color: #d1d5db;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: #6366f1;
+    border: 1px solid #6366f1;
+
+    &:hover:not(:disabled) {
+      background-color: #eef2ff;
+    }
+
+    &:active:not(:disabled) {
+      background-color: #e0e7ff;
+    }
+  }
+
+  &--danger {
+    background-color: #ef4444;
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background-color: #dc2626;
+    }
+
+    &:active:not(:disabled) {
+      background-color: #b91c1c;
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: #6366f1;
+
+    &:hover:not(:disabled) {
+      background-color: #eef2ff;
+    }
+
+    &:active:not(:disabled) {
+      background-color: #e0e7ff;
+    }
+  }
+
+  // Full width
+  &--full {
+    width: 100%;
+  }
+
+  // Loading spinner
+  &--loading {
+    pointer-events: none;
+  }
+
+  &__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.6s linear infinite;
+  }
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
