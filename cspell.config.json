@@ -1,0 +1,15 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "files": ["src/**/*.{js,jsx,ts,tsx,css,md}"],
+  "ignorePaths": ["node_modules", "dist", "package-lock.json"],
+  "dictionaries": ["project-words"],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": ".cspell-words.txt",
+      "addWords": true
+    }
+  ],
+  "ignoreWords": []
+}
