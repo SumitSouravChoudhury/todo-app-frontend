@@ -1,0 +1,27 @@
+@use "/src/styles/variable.scss" as variable;
+
+.headerContainer {
+  width: 100%;
+  background: variable.$color-gray-0;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .utilityContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    p {
+      font-size: 18px;
+      cursor: default;
+    }
+  }
+}
