@@ -7,6 +7,12 @@
   align-items: center;
   gap: 32px;
   padding: 32px;
+  min-height: calc(100vh - 133px);
+
+  @media screen and (max-width: 767px) {
+    padding: 40px 20px;
+    min-height: calc(100vh - 115.5px);
+  }
 
   .todoForm {
     width: 100%;
@@ -21,11 +27,20 @@
     }
   }
 
+  .todoEmpty {
+    font-size: 16px;
+    color: #888;
+  }
+
   .todoList {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+
+    @media screen and (max-width: 767px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
 
     .todoCard {
       border: 1px solid #c2c2c2;
@@ -34,6 +49,11 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+
+      @media screen and (max-width: 767px) {
+        padding: 16px;
+        border-radius: 12px;
+      }
 
       p {
         font-size: 16px;

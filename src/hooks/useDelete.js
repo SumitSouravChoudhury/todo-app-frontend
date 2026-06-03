@@ -6,7 +6,10 @@ export const useDelete = (url, options = {}) => {
   const { invalidateKeys, onSuccess, ...restOptions } = options;
 
   return useMutation({
-    mutationFn: () => api.delete(url),
+    mutationFn: (variables) => {
+      const resolvedUrl = typeof url === "function" ? url(variables) : url;
+      return api.delete(resolvedUrl);
+    },
     onSuccess: (data, variables, context) => {
       if (invalidateKeys) {
         invalidateKeys.forEach((key) => queryClient.invalidateQueries({ queryKey: [key] }));

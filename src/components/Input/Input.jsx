@@ -11,6 +11,8 @@ const Input = ({
   error,
   disabled = false,
   required = false,
+  rightIcon,
+  onRightIconClick,
   className = "",
   ...rest
 }) => {
@@ -22,18 +24,28 @@ const Input = ({
           {required && <span className="inputField__required">*</span>}
         </label>
       )}
-      <input
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        disabled={disabled}
-        required={required}
-        className={`inputField__input${error ? " inputField__input--error" : ""}`}
-        {...rest}
-      />
+      <div className="inputField__wrapper">
+        <input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          disabled={disabled}
+          required={required}
+          className={`inputField__input${rightIcon ? " inputField__input--withIcon" : ""}${error ? " inputField__input--error" : ""}`}
+          {...rest}
+        />
+        {rightIcon && (
+          <img
+            src={rightIcon}
+            alt="input-icon"
+            className={`inputField__rightIcon${onRightIconClick ? " inputField__rightIcon--clickable" : ""}`}
+            onClick={onRightIconClick}
+          />
+        )}
+      </div>
       {error && <span className="inputField__error">{error}</span>}
     </div>
   );

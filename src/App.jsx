@@ -5,6 +5,7 @@ import SignIn from "./containers/SignIn";
 import SignUp from "./containers/SignUp";
 import Todo from "./containers/Todo";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         />
         <Route path="*" element={<Navigate to="/sign-in" replace />} />
       </Routes>
+      <Footer />
     </>
   );
 }
