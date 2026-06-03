@@ -15,6 +15,13 @@
     margin-left: 2px;
   }
 
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
   &__input {
     width: 100%;
     padding: 12px 16px;
@@ -29,8 +36,16 @@
       border-color 0.2s ease,
       box-shadow 0.2s ease;
 
+    @media screen and (max-width: 767px) {
+      padding: 10px 16px;
+    }
+
     &::placeholder {
       color: #9ca3af;
+    }
+
+    &--withIcon {
+      padding-right: 44px;
     }
 
     &--error {
@@ -41,6 +56,21 @@
       background-color: #f3f4f6;
       color: #9ca3af;
       cursor: not-allowed;
+    }
+  }
+
+  &__rightIcon {
+    position: absolute;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    width: 20px;
+    height: 20px;
+
+    &--clickable {
+      cursor: pointer;
     }
   }
 

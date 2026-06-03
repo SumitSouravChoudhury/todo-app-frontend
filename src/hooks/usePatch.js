@@ -1,0 +1,21 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/services/api";
+
+export const usePatch = (url, options = {}) => {
+  const queryClient = useQueryClient();
+  const { invalidateKeys, onSuccess, ...restOptions } = options;
+
+  return useMutation({
+    mutationFn: (variables) => {
+      const resolvedUrl = typeof url === "function" ? url(variables) : url;
+      return api.patch(resolvedUrl, variables);
+    },
+    onSuccess: (data, variables, context) => {
+      if (invalidateKeys) {
+        invalidateKeys.forEach((key) => queryClient.invalidateQueries({ queryKey: [key] }));
+      }
+      onSuccess?.(data, variables, context);
+    },
+    ...restOptions,
+  });
+};

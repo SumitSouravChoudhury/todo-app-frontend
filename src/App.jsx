@@ -5,6 +5,8 @@ import SignIn from "./containers/SignIn";
 import SignUp from "./containers/SignUp";
 import Todo from "./containers/Todo";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -13,10 +15,17 @@ function App() {
       <Routes>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/" element={<Todo />} />
-
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Todo />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/sign-in" replace />} />
       </Routes>
+      <Footer />
     </>
   );
 }

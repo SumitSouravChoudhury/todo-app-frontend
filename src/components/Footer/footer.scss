@@ -1,0 +1,15 @@
+@use "/src/styles/variable.scss" as variable;
+
+.footerContainer {
+  width: 100%;
+  background: variable.$color-gray-0;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+  }
+}
