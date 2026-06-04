@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePost } from "@/hooks/usePost";
+import { usePostForm } from "@/hooks/usePostForm";
 import { useToast } from "@/hooks/useToast";
 import { ENDPOINTS } from "@/services/endpoints";
 
@@ -22,24 +22,30 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
   const isEmailValid = EMAIL_REGEX.test(email);
   const isFormValid = fullName.trim().length > 0 && isEmailValid && password.trim().length > 0;
 
-  const { mutate: signUp, isPending } = usePost(ENDPOINTS.AUTH.SIGNUP, {
+  const { mutate: signUp, isPending } = usePostForm(ENDPOINTS.AUTH.SIGNUP, {
     onSuccess: (data) => {
       navigate("/sign-in");
       showToast(data.message || "Account created successfully.", "success");
     },
     onError: (err) => {
-      showToast(err?.message || "Registration failed. Please try again.", "error");
+      showToast(err?.error || err?.message || "Registration failed. Please try again.", "error");
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isFormValid) return;
-    signUp({ fullName, email, password });
+    const formData = new FormData();
+    formData.append("fullName", fullName);
+    formData.append("email", email);
+    formData.append("password", password);
+    if (profileImage) formData.append("profileImgUrl", profileImage);
+    signUp(formData);
   };
 
   return (
@@ -71,6 +77,12 @@ const SignUp = () => {
           onChange={(e) => setPassword(e.target.value)}
           rightIcon={showPassword ? hideIcon : showIcon}
           onRightIconClick={() => setShowPassword((prev) => !prev)}
+        />
+        <Input
+          label="Profile Image"
+          type="file"
+          accept="image/*"
+          onChange={(e) => setProfileImage(e.target.files[0])}
         />
         <Button
           width="100%"

@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-const getHeaders = () => ({
-  "Content-Type": "application/json",
+const getHeaders = (isMultipart = false) => ({
+  ...(!isMultipart ? { "Content-Type": "application/json" } : {}),
   ...(localStorage.getItem("token")
     ? { Authorization: `Bearer ${localStorage.getItem("token")}` }
     : {}),
@@ -32,6 +32,14 @@ export const api = {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(body),
+      ...options,
+    }).then(handleResponse),
+
+  postForm: (url, formData, options = {}) =>
+    fetch(`${BASE_URL}${url}`, {
+      method: "POST",
+      headers: getHeaders(true),
+      body: formData,
       ...options,
     }).then(handleResponse),
 
