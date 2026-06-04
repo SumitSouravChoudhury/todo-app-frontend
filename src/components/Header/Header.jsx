@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useGet } from "@/hooks/useGet";
-import { useScreenWidth } from "@/hooks/useScreenWidth";
 import { ENDPOINTS } from "@/services/endpoints";
 
 import "./header.scss";
@@ -17,18 +16,20 @@ const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isAuthenticated, userId, logout } = useAuth();
-  const width = useScreenWidth();
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const isAuthPage = AUTH_ROUTES.includes(pathname);
-  const isMobile = width <= 767;
 
   const { data } = useGet(["user", userId], ENDPOINTS.USER.GET(userId), {
     enabled: !!userId,
   });
 
-  const fullName = data?.user?.fullName;
+  const firstName = data?.user?.fullName.split(" ")[0];
+  const profileImage = data?.user?.profileImgUrl;
+
+  console.log(profileImage);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -55,39 +56,33 @@ const Header = () => {
 
       {!isAuthPage && isAuthenticated && (
         <div className="utilityContainer">
-          {isMobile ? (
-            <div className="dropdown" ref={dropdownRef}>
-              <div className="dropdown__trigger" onClick={() => setDropdownOpen((prev) => !prev)}>
-                {fullName && <span>{fullName}</span>}
-                <svg
-                  className={`dropdown__arrow ${dropdownOpen ? "dropdown__arrow--open" : ""}`}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </div>
-              {dropdownOpen && (
-                <div className="dropdown__menu">
-                  <Button width="100%" onClick={handleLogout}>
-                    Logout
-                  </Button>
-                </div>
-              )}
+          {firstName && <span>Hi {firstName}!</span>}
+          <div className="dropdown" ref={dropdownRef}>
+            <div className="dropdown__trigger" onClick={() => setDropdownOpen((prev) => !prev)}>
+              <img src={profileImage} alt="profileImg" />
+              <svg
+                className={`dropdown__arrow ${dropdownOpen ? "dropdown__arrow--open" : ""}`}
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
             </div>
-          ) : (
-            <>
-              {fullName && <p>Hi {fullName}!</p>}
-              <Button onClick={handleLogout}>Logout</Button>
-            </>
-          )}
+            {dropdownOpen && (
+              <div className="dropdown__menu">
+                <Button width="100%" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
