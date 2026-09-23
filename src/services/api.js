@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://sumit-dev-todo.vercel.app/";
 
 const getHeaders = (isMultipart = false) => ({
   ...(!isMultipart ? { "Content-Type": "application/json" } : {}),
